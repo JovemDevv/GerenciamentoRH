@@ -1,6 +1,7 @@
 import { doc, collection, updateDoc, getDoc, addDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { db, storage } from "./../config/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { User } from "../pages/Users/types/User";
 
 
 export const uploadProfilePicture = async (file: File, userId: string): Promise<string | null> => {
@@ -28,20 +29,16 @@ export async function getProfile(id: string) {
 }
 
 
-interface ProfileData {
-  id: string;
-  name: string;
-  age: number;
-}
 
-export async function getAllProfiles(): Promise<ProfileData[]> {
+
+export async function getAllProfiles(): Promise<User[]> {
   const profileCollectionRef = collection(db, "profile");
   const querySnapshot = await getDocs(profileCollectionRef);
   
-  const profiles: ProfileData[] = [];
+  const profiles: User[] = [];
 
   querySnapshot.forEach((doc) => {
-    const profileData = doc.data() as ProfileData;
+    const profileData = doc.data() as User;
     profileData.id = doc.id; 
     profiles.push(profileData);
   });
@@ -51,6 +48,7 @@ export async function getAllProfiles(): Promise<ProfileData[]> {
 
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function adicionarUsuarioAoFirestore(profile: any) {
   try {
     const docRef = await addDoc(collection(db, "profile"), profile);
@@ -62,6 +60,7 @@ export async function adicionarUsuarioAoFirestore(profile: any) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function atualizarUsuarioNoFirestore(profile: any, id: string) {
 
   try {

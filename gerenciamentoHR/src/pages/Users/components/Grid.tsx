@@ -11,11 +11,12 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import Avatar from "@mui/material/Avatar";
 import HistoryIcon from '@mui/icons-material/History';
 
+
 export default function Grid() {
   const [profileData, setProfileData] = useState<User[]>([]);
   const navigate = useNavigate();
-  const { id } = useParams(); // Obtém o ID da rota usando o React Router
-  const [formData, setFormData] = useState<User>();
+  const { id } = useParams(); 
+  const [, setFormData] = useState<User>();
 
   const onCall = (params: GridRenderCellParams) => {
     if (!params.row.mobile) return;
@@ -135,15 +136,16 @@ export default function Grid() {
     const fetchData = async () => {
       try {
         const data = await getAllProfiles();
-        setProfileData(data);
+
+        return setProfileData(data);
       } catch (error) {
         console.error("Erro ao buscar dados dos perfis:", error);
        
       }
-    };
+    }
   
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   
   
 
@@ -152,10 +154,9 @@ useEffect(() => {
     try {
       if (id !== undefined) {
         const userData = await getProfile(id);
-        const user = userData as User; // Conversão explícita
+        const user = userData as User;
         console.log("Dados do usuário carregados com sucesso:", user);
 
-        // Atualize o estado local com os dados do usuário
         setFormData(user);
       }
     } catch (error) {
@@ -163,7 +164,6 @@ useEffect(() => {
     }
   };
 
-  // Certifique-se de chamar fetchData apenas se id não for undefined
   if (id !== undefined) {
     fetchData();
   }

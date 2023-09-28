@@ -12,18 +12,7 @@ import {
 } from "@mui/material";
 import { jsPDF } from "jspdf";
 
-function calculateAge(birthDate: Date) {
-  const today = new Date();
-  const age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
- 
 
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    return age - 1;
-  }
-
-  return age;
-}
 
 function Historico() {
   const { id } = useParams();
@@ -36,9 +25,7 @@ function Historico() {
         if (id !== undefined) {
           const fetchedData = await getProfile(id);
           setUserData(fetchedData as User);
-        } else {
-         
-        }
+        } else { /* empty */ }
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
         setError(error as Error);
@@ -64,7 +51,19 @@ function Historico() {
     return <div>Carregando...</div>;
   }
 
-  const birthDate = userData.birthDate.toDate();
+  function calculateAge(birthDate: Date) {
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+   
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      return age - 1;
+    }
+  
+    return age;
+  }
+  // eslint-disable-next-line no-undef, @typescript-eslint/no-explicit-any
+  const birthDate = (userData.birthDate as any).toDate();
   const age = calculateAge(birthDate);
 
   const generatePDF = () => {
