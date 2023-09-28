@@ -16,7 +16,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import "./../../../style/App.css";
@@ -36,7 +36,7 @@ export default function Form() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   const {
     control,
@@ -87,30 +87,32 @@ export default function Form() {
           profilePicture,
           id || ""
         ); // Use o ID se disponível
-
+  
         // Defina a URL da foto de perfil no objeto de dados
         data.profilePicture = profilePictureUrl || ""; // Substitua pelo caminho real da imagem ou vazio se não houver imagem
       } else {
         data.profilePicture = ""; // Se não houver imagem de perfil
       }
-
+  
       if (!id) {
         // Adicione um novo usuário
-        await adicionarUsuarioAoFirestore(data, id); // Use adicionarUsuarioAoFirestore
+        await adicionarUsuarioAoFirestore(data); // Remova o segundo argumento (id) se não for necessário
       } else {
         // Atualize um usuário existente
         const newUsers = [...users];
-        const userIndex = newUsers.findIndex((user) => user.id === id); // Use newUsers aqui
+        const userIndex = newUsers.findIndex((user) => user.id === id);
         newUsers[userIndex] = { ...data, id };
         setUsers(newUsers);
-        await atualizarUsuarioNoFirestore(data, id); // Não precisa passar o ID aqui
+        await atualizarUsuarioNoFirestore(data, id); // Mantenha o ID aqui se for necessário para a atualização
       }
-      console.log(adicionarUsuarioAoFirestore);
+  
+      // Navegue para a página "/users" após o envio bem-sucedido
       navigate("/users");
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error);
     }
   };
+  
 
   const handleProfilePictureChange = (
     e: React.ChangeEvent<HTMLInputElement>

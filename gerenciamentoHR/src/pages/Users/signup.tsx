@@ -24,7 +24,7 @@ const SignUp = () => {
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
       try {
         await createUserWithEmailAndPassword(auth, values.email, values.password);
-        navigate("/"); // Redirecione para a página de login após o registro com sucesso
+        navigate("/"); 
       } catch (error) {
         console.error("Erro ao criar conta:", error);
         setFieldError("email", "Erro ao criar conta. Tente novamente mais tarde.");

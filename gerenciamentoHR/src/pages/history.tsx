@@ -45,7 +45,7 @@ function Historico() {
       }
     };
 
-    // Certifique-se de chamar fetchData apenas se id não for undefined
+
     if (id !== undefined) {
       fetchData();
     }

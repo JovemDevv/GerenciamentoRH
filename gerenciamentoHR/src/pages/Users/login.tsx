@@ -9,22 +9,20 @@ import { auth } from "../../config/firebase";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [authenticated, setAuthenticated] = useState(false); // Estado local para verificar autenticação
+  const [authenticated, setAuthenticated] = useState(false); 
  
 
 
   useEffect(() => {
-    // Verificar se o usuário já está autenticado
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setAuthenticated(true); // Define o estado como autenticado se o usuário estiver autenticado
-        navigate("/"); // Redirecionar para a página de perfil
+        setAuthenticated(true); 
+        navigate("/"); 
       } else {
         setAuthenticated(false);
       }
     });
 
-    // Certifique-se de cancelar a assinatura ao desmontar o componente
     return () => unsubscribe();
   }, [navigate]);
 
@@ -41,7 +39,7 @@ const Login = () => {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
         const user = userCredential.user;
-        navigate("/dashboard"); // Redirecionar o usuário para a página /users
+        navigate("/dashboard"); 
       } catch (error) {
         setFieldError("password", "Credenciais inválidas");
       } finally {
@@ -55,14 +53,14 @@ const Login = () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const user = userCredential.user;
-      navigate("/dashboard"); // Redirecionar para a página /users após o login com sucesso
+      navigate("/dashboard"); 
     } catch (error) {
       console.error("Erro ao fazer login com o Google:", error);
     }
   };
 
   if (authenticated) {
-    return null; // Renderize um componente vazio ou redirecione para outra página se o usuário já estiver autenticado
+    return null; 
   }
 
   return (
