@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import InfoIcon from "@mui/icons-material/Info";
 import {
@@ -18,7 +18,7 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 import {  useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./../../../style/App.css";
 import FormTitle from "../../../components/FormTitle";
 import { findBrazilianZipCode } from "../../../services/api";
@@ -29,14 +29,16 @@ import {
 } from "../../../services/profile";
 import { UserSchema } from "../schemas/UserSchema";
 import { User } from "../types/User";
-import 'firebase/firestore'; // Import Firestore
+
 
 export default function Form() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([])
   const { id } = useParams();
   const navigate = useNavigate();
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [loading] = useState(false);
+  const location = useLocation()
+  const {userData} = location.state ? location.state : { userData: {} }
 
   const {
     control,
@@ -47,37 +49,38 @@ export default function Form() {
     setValue,
   } = useForm<User>({
     resolver: yupResolver(UserSchema),
-  });
+  }) 
 
   const [zipCodeFounded, setZipCodeFounded] = useState<boolean>();
 
   useEffect(() => {
-    if (!id) return;
+    // if (!id) return;
 
-    const user = users.find((user) => user.id === id);
+    // const user = users.find((user) => user.id === id);
 
-    if (!user) return;
-
-    setValue("fullName", user.fullName);
-    setValue("document", user.document);
-    setValue("birthDate", new Date(user.birthDate));
-    setValue("email", user.email);
-    setValue("emailVerified", user.emailVerified);
-    setValue("mobile", user.mobile);
-    setValue("zipCode", user.zipCode);
-    setValue("addressName", user.addressName);
-    setValue("number", user.number);
-    setValue("complement", user.complement);
-    setValue("position", user.position);
-    setValue("hiringDate", new Date(user.hiringDate));
-    setValue("department", user.department);
-    setValue("salary", user.salary);
-    setValue("neighborhood", user.neighborhood);
-    setValue("city", user.city);
-    setValue("state", user.state);
-    setValue("profilePicture", user.profilePicture);
-    setValue("situacion", user.situacion);
-  }, [id, setValue, users]);
+    // if (!user) return;
+    if(userData.fullName){
+    setValue("fullName", userData.fullName);
+    setValue("document", userData.document);
+    setValue("birthDate", new Date(userData.birthDate));
+    setValue("email", userData.email);
+    setValue("emailVerified", userData.emailVerified);
+    setValue("mobile", userData.mobile);
+    setValue("zipCode", userData.zipCode);
+    setValue("addressName", userData.addressName);
+    setValue("number", userData.number);
+    setValue("complement", userData.complement);
+    setValue("position", userData.position);
+    setValue("hiringDate", new Date(userData.hiringDate));
+    setValue("department", userData.department);
+    setValue("salary", userData.salary);
+    setValue("neighborhood", userData.neighborhood);
+    setValue("city", userData.city);
+    setValue("state", userData.state);
+    setValue("profilePicture", userData.profilePicture);
+    setValue("situacion", userData.situacion);
+  }
+  }, [id, setValue, userData ]);
 
   const onSubmit = async (data: User) => {
     try {
@@ -113,6 +116,8 @@ export default function Form() {
     }
   };
   
+     
+  
 
   const handleProfilePictureChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -138,7 +143,15 @@ export default function Form() {
   
 
   const formatCPF = (value: string) => {
+    // Remova todos os caracteres não numéricos
     value = value.replace(/\D/g, '');
+  
+    // Limite o tamanho máximo do CPF a 11 caracteres
+    if (value.length > 11) {
+      value = value.substr(0, 11);
+    }
+  
+    // Aplicar formatação
     if (value.length > 3) {
       value = value.substr(0, 3) + '.' + value.substr(3);
     }
@@ -148,16 +161,27 @@ export default function Form() {
     if (value.length > 11) {
       value = value.substr(0, 11) + '-' + value.substr(11);
     }
+  
     return value;
   };
+  
 
   const formatCelular = (value: string) => {
-    value = value.replace(/\D/g, '');
-    if (value.length === 11) {
-      value = `(${value.substr(0, 2)}) ${value.substr(2, 5)}-${value.substr(7)}`;
-    }
-    return value;
-  };
+  // Remova todos os caracteres não numéricos
+  value = value.replace(/\D/g, '');
+
+  // Limite o tamanho máximo do número de celular a 11 caracteres
+  if (value.length > 11) {
+    value = value.substr(0, 11);
+  }
+
+  // Aplicar formatação
+  if (value.length === 11) {
+    value = `(${value.substr(0, 2)}) ${value.substr(2, 5)}-${value.substr(7)}`;
+  }
+  return value;
+};
+
 
   const onZipCodeBlur = async (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
@@ -189,7 +213,7 @@ export default function Form() {
     setValue("state", address.state);
 
     setFocus("number");
-  };
+  }
 
   return (
     <Box

@@ -17,7 +17,7 @@ const Login = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setAuthenticated(true); 
-        navigate("/"); 
+        navigate("/dashboard"); 
       } else {
         setAuthenticated(false);
       }
@@ -37,8 +37,7 @@ const Login = () => {
     }),
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
       try {
-        const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
-        const user = userCredential.user;
+        await signInWithEmailAndPassword(auth, values.email, values.password);
         navigate("/dashboard"); 
       } catch (error) {
         setFieldError("password", "Credenciais inválidas");
@@ -46,18 +45,19 @@ const Login = () => {
         setSubmitting(false);
       }
     },
+    
   });
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      const userCredential = await signInWithPopup(auth, provider);
-      const user = userCredential.user;
+      await signInWithPopup(auth, provider);
       navigate("/dashboard"); 
     } catch (error) {
       console.error("Erro ao fazer login com o Google:", error);
     }
   };
+  
 
   if (authenticated) {
     return null; 
