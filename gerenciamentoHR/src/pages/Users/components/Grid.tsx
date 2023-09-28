@@ -26,10 +26,9 @@ export default function Grid() {
     if (!params.row.id) return;
   
     try {
-      const userData = await getProfile(params.row.id); // Chama a função para buscar os dados do usuário com base no ID
-      console.log("Dados do usuário carregados com sucesso:", userData);
+      const userData = await getProfile(params.row.id); 
+      console.log("Dados do usuário carregados com sucesso:", userData );
   
-      // Navegue para a página de edição e passe os dados do usuário como parâmetro
       navigate(`/users/${params.row.id}`, { state: { userData } });
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
@@ -69,8 +68,8 @@ export default function Grid() {
       renderCell: (params) => (
         <Avatar
           alt="Foto de Perfil"
-          src={params.value} // Suponha que params.value contenha a URL da foto do perfil
-          sx={{ width: 32, height: 32 }} // Ajuste o tamanho conforme necessário
+          src={params.value} 
+          sx={{ width: 32, height: 32 }} 
         />
       ),
     },
@@ -83,7 +82,7 @@ export default function Grid() {
     { field: "department", headerName: "Setor", width: 150 },
     {
       field: "hiringDate", 
-      headerName: "Idade",
+      headerName: "Data de admissão",
       minWidth: 150
     },
     { field: "situacion", headerName: "Situação", minWidth: 100 },
@@ -117,9 +116,9 @@ export default function Grid() {
   
           
           <IconButton
-          color="primary" // Cor do ícone pode ser ajustada conforme necessário
+          color="primary" 
           size="small"
-          onClick={() => onHistory(params.row.id)} // Passe o ID do usuário como parâmetro
+          onClick={() => onHistory(params.row.id)} 
         >
           <HistoryIcon fontSize="inherit" />
         </IconButton>
@@ -128,7 +127,7 @@ export default function Grid() {
     },
   ];
   const onHistory = (userId: string) => {
-    // Navegue para a página de histórico do usuário com base no ID
+   
     navigate(`/historico/${userId}`);
   };
 
@@ -139,7 +138,7 @@ export default function Grid() {
         setProfileData(data);
       } catch (error) {
         console.error("Erro ao buscar dados dos perfis:", error);
-        // Adicione um feedback de erro para o usuário, se necessário
+       
       }
     };
   
@@ -151,18 +150,25 @@ export default function Grid() {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const userData = await getProfile(id); // Chama a função para buscar os dados do usuário com base no ID
-      console.log("Dados do usuário carregados com sucesso:", userData);
-      
-      // Atualize o estado local com os dados do usuário
-      setFormData(userData);
+      if (id !== undefined) {
+        const userData = await getProfile(id);
+        const user = userData as User; // Conversão explícita
+        console.log("Dados do usuário carregados com sucesso:", user);
+
+        // Atualize o estado local com os dados do usuário
+        setFormData(user);
+      }
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
     }
   };
 
-  fetchData();
+  // Certifique-se de chamar fetchData apenas se id não for undefined
+  if (id !== undefined) {
+    fetchData();
+  }
 }, [id]);
+
 
    
   return <DataTable columns={columns} rows={profileData} />

@@ -53,7 +53,6 @@ export async function getAllProfiles(): Promise<ProfileData[]> {
 }
 
 
-
 // Adicionando um novo usuário ao Firestore
 export async function adicionarUsuarioAoFirestore(profile: any) {
   try {

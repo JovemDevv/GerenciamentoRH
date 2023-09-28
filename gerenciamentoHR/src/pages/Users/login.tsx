@@ -6,16 +6,19 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
+
 const Login = () => {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false); // Estado local para verificar autenticação
+ 
+
 
   useEffect(() => {
     // Verificar se o usuário já está autenticado
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setAuthenticated(true); // Define o estado como autenticado se o usuário estiver autenticado
-        navigate("/users"); // Redirecionar para a página de perfil
+        navigate("/"); // Redirecionar para a página de perfil
       } else {
         setAuthenticated(false);
       }
@@ -38,7 +41,7 @@ const Login = () => {
       try {
         const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
         const user = userCredential.user;
-        navigate("/users"); // Redirecionar o usuário para a página /users
+        navigate("/dashboard"); // Redirecionar o usuário para a página /users
       } catch (error) {
         setFieldError("password", "Credenciais inválidas");
       } finally {
@@ -52,7 +55,7 @@ const Login = () => {
     try {
       const userCredential = await signInWithPopup(auth, provider);
       const user = userCredential.user;
-      navigate("/users"); // Redirecionar para a página /users após o login com sucesso
+      navigate("/dashboard"); // Redirecionar para a página /users após o login com sucesso
     } catch (error) {
       console.error("Erro ao fazer login com o Google:", error);
     }
