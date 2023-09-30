@@ -53,6 +53,7 @@ export default function Form() {
 
   const [zipCodeFounded, setZipCodeFounded] = useState<boolean>();
 
+
   useEffect(() => {
     // if (!id) return;
 
@@ -62,7 +63,7 @@ export default function Form() {
     if(userData.fullName){
     setValue("fullName", userData.fullName);
     setValue("document", userData.document);
-    setValue("birthDate", new Date(userData.birthDate));
+    setValue("birthDate", new Date(userData.birthDate))
     setValue("email", userData.email);
     setValue("emailVerified", userData.emailVerified);
     setValue("mobile", userData.mobile);
@@ -290,7 +291,7 @@ export default function Form() {
         <Controller
           control={control}
           name="birthDate"
-          render={({ field }) => (
+          render={({ field: { ...field } }) => (
             <FormControl fullWidth={true}>
               <DatePicker label="Data de Nascimento" {...field} />
             </FormControl>

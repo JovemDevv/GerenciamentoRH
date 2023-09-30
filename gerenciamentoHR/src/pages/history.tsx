@@ -11,6 +11,8 @@ import {
   Button
 } from "@mui/material";
 import { jsPDF } from "jspdf";
+import PageTitle from "../components/PageTitle";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 
 
@@ -125,6 +127,10 @@ function Historico() {
 
   return (
     <Container>
+          <Breadcrumbs
+            path={[{ label: "Funcionários", to: "/users/" }, { label: "Histórico" }]}
+          />
+          <PageTitle title="Informações" />
       <Grid container spacing={3}>
         <Grid item xs={12} >
           <Paper elevation={3} >
@@ -179,6 +185,11 @@ function Historico() {
               Voltar
             </Button>
           </Link>
+          <Grid item xs={12} sm={6} sx={{mt:5}}>
+          <Paper elevation={6}>
+          <PageTitle title="Histórico" />
+          </Paper>
+          </Grid>
     </Container>
     
   );
