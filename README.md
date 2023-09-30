@@ -1,5 +1,5 @@
 # GerenciamentoRH
-Este é um projeto de sistema de cadastro de funcionários que permite gerar informações cadastrais, gerar PDFs, realizar alterações cadastrais e muito mais. Foi desenvolvido utilizando tecnologias como React, TypeScript, Firebase, Yup, React Hook Form e Material UI.
+Este é um projeto de sistema de cadastro de funcionários que permite gerar informações cadastrais, gerar PDFs, realizar alterações cadastrais e muito mais.
 
 ## Funcionalidades Principais
 
