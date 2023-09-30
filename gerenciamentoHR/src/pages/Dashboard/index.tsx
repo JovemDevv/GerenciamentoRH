@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Typography, Button, Box, Grid } from "@mui/material";
 
 export default function Dashboard() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -58,7 +59,7 @@ export default function Dashboard() {
           <Box display="flex" flexDirection="column" alignItems="center">
             <Link to="/users">
               <Button variant="contained" color="primary">
-                Ir para Usuários Cadastrados
+                Ir para Funcionários Cadastrados
               </Button>
             </Link>
 
