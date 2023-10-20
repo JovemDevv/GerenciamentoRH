@@ -61,8 +61,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir problemas (issue
 Este projeto está sob a licença LICENSE.
 
 
-## Copy code
-
-Lembre-se de substituir as informações de exemplo (como URLs e variáveis de ambiente) pelas informações reais do seu projeto. Certifique-se também de incluir informações detalhadas sobre como configurar e usar seu projeto.
-
 
