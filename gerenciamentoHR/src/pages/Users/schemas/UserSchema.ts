@@ -1,12 +1,12 @@
-import * as yup from "yup"
+import * as yup from "yup";
 
-import { User } from "../types/User"
+import { User } from "../types/User";
 
 export const UserSchema = yup
   .object<User>({
     fullName: yup.string().required("Este campo é obrigatório"),
     document: yup.string().required("Este campo é obrigatório"),
-    birthDate: yup.date(),
+    birthDate: yup.string().required("Este campo é obrigatório"),
     email: yup
       .string()
       .email("E-mail não reconhecido")
@@ -30,4 +30,4 @@ export const UserSchema = yup
     profilePicture: yup.string(),
     situacion: yup.string().required("Este campo é obrigatório"),
   })
-  .required()
+  .required();
