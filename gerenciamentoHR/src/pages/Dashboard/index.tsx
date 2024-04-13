@@ -12,8 +12,8 @@ import {
   ListItemText,
   Paper,
 } from "@mui/material";
-import { getAllProfiles } from "../../services/profile";
-import { User } from "../Users/types/User";
+import { getAllProfiles } from "../../users/services/profile";
+import { User } from "../../users/types/User";
 
 export default function Dashboard() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -25,15 +25,15 @@ import {
   useParams,
 } from "react-router-dom";
 import "./../../../style/App.css";
-import FormTitle from "../../../components/FormTitle";
-import { findBrazilianZipCode } from "../../../services/api";
+import FormTitle from "../../../users/components/FormTitle";
+import { findBrazilianZipCode } from "../../../users/services/api";
 import {
   adicionarUsuarioAoFirestore,
   atualizarUsuarioNoFirestore,
   uploadProfilePicture,
-} from "../../../services/profile";
-import { UserSchema } from "../schemas/UserSchema";
-import { User } from "../types/User";
+} from "../../../users/services/profile";
+import { UserSchema } from "../../../users/schemas/UserSchema";
+import { User } from "../../../users/types/User";
 
 export default function Form() {
   const [users, setUsers] = useState<User[]>([]);
