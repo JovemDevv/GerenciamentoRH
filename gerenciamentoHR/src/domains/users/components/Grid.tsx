@@ -4,13 +4,13 @@ import { IconButton, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import DataTable from "../../../users/components/DataTable";
-import { User } from "../../../users/types/User";
+import DataTable from "../../../components/DataTable";
+import { User } from "../../../domains/users/types/User";
 import {
   getAllProfiles,
   deleteProfile,
   getProfile,
-} from "../../../users/services/profile";
+} from "../../../shared/services/profile";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import Avatar from "@mui/material/Avatar";
 import HistoryIcon from "@mui/icons-material/History";
