@@ -72,7 +72,36 @@ export async function adicionarUsuarioAoFirestore(profile: any) {
 export async function atualizarUsuarioNoFirestore(profile: any, id: string) {
   try {
     const profileUserRef = doc(db, "profile", id);
+    const profileData = await getDoc(profileUserRef);
+
+    if (!profileData.exists()) {
+      console.error("Documento não encontrado.");
+      return;
+    }
+
+    const previousData = profileData.data(); // Dados anteriores do perfil
+    const updateData: Update = {
+      userId: id,
+      timestamp: new Date().toISOString(),
+      field: "", // Defina o campo que está sendo atualizado
+      oldValue: "", // Defina o valor antigo do campo
+      newValue: "", // Defina o novo valor do campo
+    };
+
+    // Atualize os dados do perfil
     await updateDoc(profileUserRef, profile);
+
+    // Verifique as alterações e adicione ao histórico de atualizações
+    Object.keys(profile).forEach((key) => {
+      if (previousData && previousData[key] !== profile[key]) {
+        updateData.field = key;
+        updateData.oldValue = previousData[key];
+        updateData.newValue = profile[key];
+        // Adicione a atualização à coleção userUpdates
+        addDoc(collection(db, "userUpdates"), updateData);
+      }
+    });
+
     console.log("Documento atualizado com sucesso.");
   } catch (e) {
     console.error("Erro ao atualizar o documento: ", e);
@@ -87,6 +116,35 @@ export async function deleteProfile(id: string): Promise<void> {
     console.log("Perfil excluído com sucesso.");
   } catch (error) {
     console.error("Erro ao excluir o perfil:", error);
+    throw error;
+  }
+}
+
+// Função para obter o histórico de atualizações de um usuário
+interface Update {
+  userId: string;
+  timestamp: string;
+  field: string;
+  oldValue: string;
+  newValue: string;
+}
+
+export async function obterHistoricoAtualizacoesUsuario(userId: string) {
+  try {
+    const userUpdatesRef = collection(db, "userUpdates");
+    const querySnapshot = await getDocs(userUpdatesRef);
+    const updates: Update[] = [];
+
+    querySnapshot.forEach((doc) => {
+      const updateData = doc.data() as Update;
+      if (updateData.userId === userId) {
+        updates.push(updateData);
+      }
+    });
+
+    return updates;
+  } catch (error) {
+    console.error("Erro ao obter o histórico de atualizações:", error);
     throw error;
   }
 }

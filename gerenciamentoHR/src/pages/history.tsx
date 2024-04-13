@@ -13,11 +13,16 @@ import {
 import { jsPDF } from "jspdf";
 import PageTitle from "../components/PageTitle";
 import Breadcrumbs from "../components/Breadcrumbs";
+import { obterHistoricoAtualizacoesUsuario } from "../services/profile";
+import { format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
 function Historico() {
   const { id } = useParams();
   const [userData, setUserData] = useState<User | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [updates, setUpdates] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,8 +30,9 @@ function Historico() {
         if (id !== undefined) {
           const fetchedData = await getProfile(id);
           setUserData(fetchedData as User);
-        } else {
-          /* empty */
+          // Buscar histórico de atualizações quando o perfil do usuário for carregado
+          const historicalData = await obterHistoricoAtualizacoesUsuario(id);
+          setUpdates(historicalData); // Atualizar o estado das atualizações
         }
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
@@ -197,8 +203,25 @@ function Historico() {
         </Button>
       </Link>
       <Grid item xs={12} sm={6} sx={{ mt: 5 }}>
+        <PageTitle title="Histórico" />
         <Paper elevation={6}>
-          <PageTitle title="Histórico" />
+          {updates.map((update, index) => (
+            <div key={index} style={{ marginBottom: 10 }}>
+              <Typography variant="h6">{`Atualização: ${
+                index + 1
+              }`}</Typography>
+              <Typography>
+                Data e Hora:{" "}
+                {format(new Date(update.timestamp), "dd/MM/yyyy HH:mm:ss", {
+                  locale: ptBR,
+                })}
+              </Typography>
+              <Typography>Campo: {update.field}</Typography>
+              <Typography>Valor Antigo: {update.oldValue}</Typography>
+              <Typography>Novo Valor: {update.newValue}</Typography>
+              <hr />
+            </div>
+          ))}
         </Paper>
       </Grid>
     </Container>
