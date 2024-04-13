@@ -20,6 +20,8 @@ Este é um projeto de sistema de cadastro de funcionários que permite gerar inf
 - [Yup](https://github.com/jquense/yup)
 - [React Hook Form](https://react-hook-form.com/)
 - [Material UI](https://mui.com/)
+- DDD
+- microsserviços
 
 ## Instalação e Uso
 
