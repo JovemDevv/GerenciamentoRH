@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../../config/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { User } from "../types/User";
+import { User } from "../../domains/users/types/User";
 
 export const uploadProfilePicture = async (
   file: File,
