@@ -7,9 +7,9 @@ import {
   getDocs,
   deleteDoc,
 } from "firebase/firestore";
-import { db, storage } from "./../config/firebase";
+import { db, storage } from "../../config/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { User } from "../pages/Users/types/User";
+import { User } from "../types/User";
 
 export const uploadProfilePicture = async (
   file: File,

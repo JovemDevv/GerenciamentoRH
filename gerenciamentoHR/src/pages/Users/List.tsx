@@ -1,7 +1,7 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Box, Button, Paper, Stack } from "@mui/material";
-import Breadcrumbs from "../../components/Breadcrumbs";
-import PageTitle from "../../components/PageTitle";
+import Breadcrumbs from "../../users/components/Breadcrumbs";
+import PageTitle from "../../users/components/PageTitle";
 import Grid from "./components/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";

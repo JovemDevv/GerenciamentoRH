@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getProfile } from "../services/profile";
-import { User } from "./Users/types/User";
+import { getProfile } from "../users/services/profile";
+import { User } from "../users/types/User";
 import {
   Container,
   Grid,
@@ -11,9 +11,9 @@ import {
   Button,
 } from "@mui/material";
 import { jsPDF } from "jspdf";
-import PageTitle from "../components/PageTitle";
-import Breadcrumbs from "../components/Breadcrumbs";
-import { obterHistoricoAtualizacoesUsuario } from "../services/profile";
+import PageTitle from "../users/components/PageTitle";
+import Breadcrumbs from "../users/components/Breadcrumbs";
+import { obterHistoricoAtualizacoesUsuario } from "../users/services/profile";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 
