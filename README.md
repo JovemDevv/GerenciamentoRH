@@ -21,7 +21,7 @@ Este é um projeto de sistema de cadastro de funcionários que permite gerar inf
 - [React Hook Form](https://react-hook-form.com/)
 - [Material UI](https://mui.com/)
 - DDD
-- microsserviços
+- microserviço(PDF)
 
 ## Instalação e Uso
 
