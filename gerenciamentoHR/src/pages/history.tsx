@@ -10,7 +10,6 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import { jsPDF } from "jspdf";
 import PageTitle from "../components/PageTitle";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { obterHistoricoAtualizacoesUsuario } from "../shared/services/profile";
@@ -79,59 +78,20 @@ function Historico() {
       : new Date(userData.birthDate);
   const age = calculateAge(birthDate);
 
-  const generatePDF = () => {
-    const doc = new jsPDF();
-
-    doc.setFontSize(32);
-    doc.setFont("helvetica", "bold");
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.text(userData.fullName, doc.internal.pageSize.getWidth() / 2, 20, {
-      align: "center",
-    });
-
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(80, 80, 80);
-    doc.text("Detalhes empregadícios", 20, 50);
-    doc.line(20, 52, 95, 52);
-
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(80, 80, 80);
-    doc.text("Cargo: " + userData.position, 20, 60);
-    doc.text("Setor: " + userData.department, 20, 70);
-    doc.text("Situação: " + userData.situacion, 20, 90);
-    doc.text("Salário: " + userData.salary, 20, 80);
-
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(80, 80, 80);
-    doc.text("Informações Pessoais", 20, 110);
-    doc.line(20, 112, 90, 112);
-
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Idade: " + age, 20, 120);
-    doc.text("Documento: " + userData.document, 20, 130);
-    doc.text("Email: " + userData.email, 20, 140);
-    doc.text("Celular: " + userData.mobile, 20, 150);
-
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(80, 80, 80);
-    doc.text("Endereço do Funcionário", 20, 170);
-    doc.line(20, 172, 98, 172);
-
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Endereço: " + userData.addressName, 20, 180);
-    doc.text("Número: " + userData.number, 20, 210);
-    doc.text("Bairro: " + userData.neighborhood, 20, 190);
-    doc.text("CEP: " + userData.zipCode, 20, 200);
-    doc.text("Cidade: " + userData.city, 20, 220);
-
-    doc.save(userData.fullName + ".pdf");
+  const generatePDF = async () => {
+    try {
+      const response = await fetch("https://seu-microservico-url/gerar-pdf", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const data = await response.json();
+      window.open(data.pdfUrl, "_blank");
+    } catch (error) {
+      console.error("Erro ao gerar PDF:", error);
+    }
   };
 
   return (
