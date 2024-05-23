@@ -21,7 +21,7 @@ Este é um projeto de sistema de cadastro de funcionários que permite gerar inf
 - [React Hook Form](https://react-hook-form.com/)
 - [Material UI](https://mui.com/)
 - DDD
-- microserviço(PDF)
+- microserviço(PDF) *esse esta desativado pois é um microsserviço que nao está ativo no momento*
 
 ## Instalação e Uso
 
@@ -52,7 +52,7 @@ REACT_APP_FIREBASE_PROJECT_ID=seu-project-id
 ## Inicie o aplicativo:
 
 ```bash
-npm start
+npm run dev
 ````
 O aplicativo estará disponível em http://localhost:3000.
 
