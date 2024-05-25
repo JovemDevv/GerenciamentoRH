@@ -7,9 +7,10 @@ Este é um projeto de sistema de cadastro de funcionários que permite gerar inf
 - Cadastro de funcionários com informações detalhadas.
 - Geração de PDF com os dados cadastrais dos funcionários.
 - Edição e atualização das informações cadastrais.
+- Histórico: junto as informações do funcionario, aparecerá o histórico de alterações cadastrais dele. *(atualizado)*
+- Dashboard Administrativa: Exibir todos os salários dos funcionários. *(atualizado)*
 - Futuras atualizações planejadas:
-  - **Histórico**: junto as informações do funcionario, aparecerá o histórico de alterações cadastrais dele.
-  - **Dashboard Administrativa**: Exibir o total dos salários dos funcionários, número de funcionários e outras métricas relevantes.
+  - **Dashboard Administrativa**: Número de funcionários e outras métricas relevantes.
   - **Menu Lateral**: Navegação facilitada para acessar as páginas dos funcionários e outras seções do sistema.
 
 ## Tecnologias Utilizadas
